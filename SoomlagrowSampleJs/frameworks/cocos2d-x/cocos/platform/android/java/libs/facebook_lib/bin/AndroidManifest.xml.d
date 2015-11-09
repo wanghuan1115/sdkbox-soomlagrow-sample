@@ -1,2 +1,2 @@
-/Users/htl/Documents/Work/sdkbox-soomlagrow-sample/SoomlagrowSampleJs/frameworks/cocos2d-x/cocos/platform/android/java/libs/facebook_lib/bin/AndroidManifest.xml : \
-/Users/htl/Documents/Work/sdkbox-soomlagrow-sample/SoomlagrowSampleJs/frameworks/cocos2d-x/cocos/platform/android/java/libs/facebook_lib/AndroidManifest.xml \
+/Users/huangqiyu/work/cocos-service-center/plugins/facebook/proj.android/libs/facebook_lib/bin/AndroidManifest.xml : \
+/Users/huangqiyu/work/cocos-service-center/plugins/facebook/proj.android/libs/facebook_lib/AndroidManifest.xml \
