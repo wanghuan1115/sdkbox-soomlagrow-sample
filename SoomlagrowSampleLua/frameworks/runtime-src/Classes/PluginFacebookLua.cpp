@@ -2,77 +2,10 @@
 #include "PluginFacebook/PluginFacebook.h"
 #include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
+#include "sdkbox/sdkbox.h"
 
 
 
-int lua_PluginFacebookLua_PluginFacebook_fetchFriends(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_fetchFriends'", nullptr);
-            return 0;
-        }
-        sdkbox::PluginFacebook::fetchFriends();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:fetchFriends",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_fetchFriends'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_PluginFacebookLua_PluginFacebook_getAccessToken(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_getAccessToken'", nullptr);
-            return 0;
-        }
-        std::string ret = sdkbox::PluginFacebook::getAccessToken();
-        tolua_pushcppstring(tolua_S,ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:getAccessToken",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_getAccessToken'.",&tolua_err);
-#endif
-    return 0;
-}
 int lua_PluginFacebookLua_PluginFacebook_getPermissionList(lua_State* tolua_S)
 {
     int argc = 0;
@@ -104,6 +37,74 @@ int lua_PluginFacebookLua_PluginFacebook_getPermissionList(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_getPermissionList'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_PluginFacebookLua_PluginFacebook_getSDKVersion(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_getSDKVersion'", nullptr);
+            return 0;
+        }
+        std::string ret = sdkbox::PluginFacebook::getSDKVersion();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:getSDKVersion",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_getSDKVersion'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_PluginFacebookLua_PluginFacebook_isLoggedIn(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_isLoggedIn'", nullptr);
+            return 0;
+        }
+        bool ret = sdkbox::PluginFacebook::isLoggedIn();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:isLoggedIn",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_isLoggedIn'.",&tolua_err);
 #endif
     return 0;
 }
@@ -209,40 +210,6 @@ int lua_PluginFacebookLua_PluginFacebook_logout(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_PluginFacebookLua_PluginFacebook_isLoggedIn(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_isLoggedIn'", nullptr);
-            return 0;
-        }
-        bool ret = sdkbox::PluginFacebook::isLoggedIn();
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:isLoggedIn",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_isLoggedIn'.",&tolua_err);
-#endif
-    return 0;
-}
 int lua_PluginFacebookLua_PluginFacebook_requestPublishPermissions(lua_State* tolua_S)
 {
     int argc = 0;
@@ -276,40 +243,6 @@ int lua_PluginFacebookLua_PluginFacebook_requestPublishPermissions(lua_State* to
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_requestPublishPermissions'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_PluginFacebookLua_PluginFacebook_login(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_login'", nullptr);
-            return 0;
-        }
-        sdkbox::PluginFacebook::login();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:login",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_login'.",&tolua_err);
 #endif
     return 0;
 }
@@ -349,7 +282,43 @@ int lua_PluginFacebookLua_PluginFacebook_requestReadPermissions(lua_State* tolua
 #endif
     return 0;
 }
-int lua_PluginFacebookLua_PluginFacebook_getSDKVersion(lua_State* tolua_S)
+int lua_PluginFacebookLua_PluginFacebook_requestInvitableFriends(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > > arg0;
+        ok &= luaval_to_object<std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >>(tolua_S, 2, "std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >",&arg0);
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_requestInvitableFriends'", nullptr);
+            return 0;
+        }
+        sdkbox::PluginFacebook::requestInvitableFriends(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:requestInvitableFriends",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_requestInvitableFriends'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_PluginFacebookLua_PluginFacebook_fetchFriends(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -368,18 +337,175 @@ int lua_PluginFacebookLua_PluginFacebook_getSDKVersion(lua_State* tolua_S)
     {
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_getSDKVersion'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_fetchFriends'", nullptr);
             return 0;
         }
-        std::string ret = sdkbox::PluginFacebook::getSDKVersion();
-        tolua_pushcppstring(tolua_S,ret);
+        sdkbox::PluginFacebook::fetchFriends();
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:getSDKVersion",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:fetchFriends",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_getSDKVersion'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_fetchFriends'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_PluginFacebookLua_PluginFacebook_inviteFriendsWithInviteIds(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 3)
+    {
+        std::vector<std::string> arg0;
+        std::string arg1;
+        std::string arg2;
+        ok &= luaval_to_std_vector_string(tolua_S, 2, &arg0, "sdkbox.PluginFacebook:inviteFriendsWithInviteIds");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "sdkbox.PluginFacebook:inviteFriendsWithInviteIds");
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "sdkbox.PluginFacebook:inviteFriendsWithInviteIds");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_inviteFriendsWithInviteIds'", nullptr);
+            return 0;
+        }
+        sdkbox::PluginFacebook::inviteFriendsWithInviteIds(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:inviteFriendsWithInviteIds",argc, 3);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_inviteFriendsWithInviteIds'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_PluginFacebookLua_PluginFacebook_login(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 1)
+        {
+            std::vector<std::string> arg0;
+            ok &= luaval_to_std_vector_string(tolua_S, 2, &arg0, "sdkbox.PluginFacebook:login");
+            if (!ok) { break; }
+            sdkbox::PluginFacebook::login(arg0);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 0)
+        {
+            sdkbox::PluginFacebook::login();
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "sdkbox.PluginFacebook:login",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_login'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_PluginFacebookLua_PluginFacebook_inviteFriends(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 2)
+    {
+        std::string arg0;
+        std::string arg1;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "sdkbox.PluginFacebook:inviteFriends");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "sdkbox.PluginFacebook:inviteFriends");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_inviteFriends'", nullptr);
+            return 0;
+        }
+        sdkbox::PluginFacebook::inviteFriends(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:inviteFriends",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_inviteFriends'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_PluginFacebookLua_PluginFacebook_getAccessToken(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_getAccessToken'", nullptr);
+            return 0;
+        }
+        std::string ret = sdkbox::PluginFacebook::getAccessToken();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:getAccessToken",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_getAccessToken'.",&tolua_err);
 #endif
     return 0;
 }
@@ -395,17 +521,20 @@ int lua_register_PluginFacebookLua_PluginFacebook(lua_State* tolua_S)
     tolua_cclass(tolua_S,"PluginFacebook","sdkbox.PluginFacebook","",nullptr);
 
     tolua_beginmodule(tolua_S,"PluginFacebook");
-        tolua_function(tolua_S,"fetchFriends", lua_PluginFacebookLua_PluginFacebook_fetchFriends);
-        tolua_function(tolua_S,"getAccessToken", lua_PluginFacebookLua_PluginFacebook_getAccessToken);
         tolua_function(tolua_S,"getPermissionList", lua_PluginFacebookLua_PluginFacebook_getPermissionList);
+        tolua_function(tolua_S,"getSDKVersion", lua_PluginFacebookLua_PluginFacebook_getSDKVersion);
+        tolua_function(tolua_S,"isLoggedIn", lua_PluginFacebookLua_PluginFacebook_isLoggedIn);
         tolua_function(tolua_S,"getUserID", lua_PluginFacebookLua_PluginFacebook_getUserID);
         tolua_function(tolua_S,"init", lua_PluginFacebookLua_PluginFacebook_init);
         tolua_function(tolua_S,"logout", lua_PluginFacebookLua_PluginFacebook_logout);
-        tolua_function(tolua_S,"isLoggedIn", lua_PluginFacebookLua_PluginFacebook_isLoggedIn);
         tolua_function(tolua_S,"requestPublishPermissions", lua_PluginFacebookLua_PluginFacebook_requestPublishPermissions);
-        tolua_function(tolua_S,"login", lua_PluginFacebookLua_PluginFacebook_login);
         tolua_function(tolua_S,"requestReadPermissions", lua_PluginFacebookLua_PluginFacebook_requestReadPermissions);
-        tolua_function(tolua_S,"getSDKVersion", lua_PluginFacebookLua_PluginFacebook_getSDKVersion);
+        tolua_function(tolua_S,"requestInvitableFriends", lua_PluginFacebookLua_PluginFacebook_requestInvitableFriends);
+        tolua_function(tolua_S,"fetchFriends", lua_PluginFacebookLua_PluginFacebook_fetchFriends);
+        tolua_function(tolua_S,"inviteFriendsWithInviteIds", lua_PluginFacebookLua_PluginFacebook_inviteFriendsWithInviteIds);
+        tolua_function(tolua_S,"login", lua_PluginFacebookLua_PluginFacebook_login);
+        tolua_function(tolua_S,"inviteFriends", lua_PluginFacebookLua_PluginFacebook_inviteFriends);
+        tolua_function(tolua_S,"getAccessToken", lua_PluginFacebookLua_PluginFacebook_getAccessToken);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(sdkbox::PluginFacebook).name();
     g_luaType[typeName] = "sdkbox.PluginFacebook";
@@ -422,6 +551,8 @@ TOLUA_API int register_all_PluginFacebookLua(lua_State* tolua_S)
 	lua_register_PluginFacebookLua_PluginFacebook(tolua_S);
 
 	tolua_endmodule(tolua_S);
+
+	sdkbox::setProjectType("lua");
 	return 1;
 }
 

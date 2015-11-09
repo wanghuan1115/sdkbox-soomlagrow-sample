@@ -151,9 +151,9 @@ static sdkbox::FBShareInfo luaValueMap_to_FBShareInfo(const LuaValueDict &dict)
     return info;
 }
 
-static sdkbox::PluginFacebook::FBAPIParam luaValueMap_to_APIParam(const LuaValueDict &dict)
+static sdkbox::FBAPIParam luaValueMap_to_APIParam(const LuaValueDict &dict)
 {
-    sdkbox::PluginFacebook::FBAPIParam param;
+    sdkbox::FBAPIParam param;
     for (LuaValueDictIterator it = dict.begin(); it != dict.end(); it++)
     {
         param[it->first] = it->second.stringValue();
@@ -307,7 +307,7 @@ int lua_PluginFacebookLua_PluginFacebook_api(lua_State* tolua_S)
             return 0;
         }
 
-        sdkbox::PluginFacebook::FBAPIParam params = luaValueMap_to_APIParam(arg0);
+        sdkbox::FBAPIParam params = luaValueMap_to_APIParam(arg0);
         sdkbox::PluginFacebook::api(path, method, params, tag);
         lua_settop(tolua_S, 1);
         return 1;
