@@ -11,6 +11,27 @@ static const std::string FBGraphUser_FIRST_NAME  ("firstName");
 static const std::string FBGraphUser_LAST_NAME   ("lastName");
 static const std::string FBGraphUser_INSTALLED   ("isInstalled");
 
+static LuaValue FBGraphUserToLua( const sdkbox::FBGraphUser& u ) {
+    LuaValueDict d;
+    
+    for( std::pair<std::string, std::string> _p : u.getFields() ) {
+        d.insert( std::make_pair(_p.first, LuaValue::stringValue(_p.second) ) );
+    }
+    
+    return LuaValue::dictValue(d);
+}
+
+static LuaValue FBUserListToLua(const sdkbox::FBInvitableFriendsInfo& l) {
+    LuaValueArray array;
+    
+    for (sdkbox::FBInvitableFriendsInfo::const_iterator it = l.begin(); it != l.end(); it++) {
+        LuaValue v = FBGraphUserToLua(*it);
+        array.push_back(v);
+    }
+    
+    return LuaValue::arrayValue(array);
+}
+
 class FacebookListenerLua : public sdkbox::FacebookListener {
 public:
     FacebookListenerLua(): mLuaHandler(0) {
@@ -108,6 +129,55 @@ public:
         dict.insert(std::make_pair("name", LuaValue::stringValue("onFetchFriends")));
         dict.insert(std::make_pair("ok", LuaValue::booleanValue(ok)));
         dict.insert(std::make_pair("data", LuaValue::stringValue(msg)));
+        stack->pushLuaValueDict(dict);
+        stack->executeFunctionByHandler(mLuaHandler, 1);
+    }
+    void onInviteFriendsResult(bool ok, const std::string& msg)
+    {
+        LuaStack* stack = LUAENGINE->getLuaStack();
+        
+        LuaValueDict dict;
+        dict.insert(std::make_pair("name", LuaValue::stringValue("onInviteFriendsResult")));
+        dict.insert(std::make_pair("ok", LuaValue::booleanValue(ok)));
+        dict.insert(std::make_pair("data", LuaValue::stringValue(msg)));
+        stack->pushLuaValueDict(dict);
+        stack->executeFunctionByHandler(mLuaHandler, 1);
+    }
+    void onInviteFriendsWithInviteIdsResult(bool ok, const std::string& msg)
+    {
+        LuaStack* stack = LUAENGINE->getLuaStack();
+        
+        LuaValueDict dict;
+        dict.insert(std::make_pair("name", LuaValue::stringValue("onInviteFriendsWithInviteIdsResult")));
+        dict.insert(std::make_pair("ok", LuaValue::booleanValue(ok)));
+        dict.insert(std::make_pair("data", LuaValue::stringValue(msg)));
+        stack->pushLuaValueDict(dict);
+        stack->executeFunctionByHandler(mLuaHandler, 1);
+    }
+    void onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo& invitable_friends_and_pagination ) {
+        LuaStack* stack = LUAENGINE->getLuaStack();
+        
+        LuaValueDict dict;
+        dict.insert(std::make_pair("name", LuaValue::stringValue("onRequestInvitableFriends")));
+        dict.insert(std::make_pair("users", FBUserListToLua(invitable_friends_and_pagination)));
+        
+        LuaValueDict urls;
+        urls.insert(std::make_pair("next_cursor", LuaValue::stringValue(invitable_friends_and_pagination.getNextCursor())));
+        urls.insert(std::make_pair("prev_cursor", LuaValue::stringValue(invitable_friends_and_pagination.getPrevCursor())));
+        urls.insert(std::make_pair("next_url", LuaValue::stringValue(invitable_friends_and_pagination.getNextURL())));
+        urls.insert(std::make_pair("prev_url", LuaValue::stringValue(invitable_friends_and_pagination.getPrevURL())));
+        dict.insert(std::make_pair("urls", LuaValue::dictValue(urls)));
+        
+        stack->pushLuaValueDict(dict);
+        stack->executeFunctionByHandler(mLuaHandler, 1);
+    }
+    void onGetUserInfo( const sdkbox::FBGraphUser& user ) {
+        LuaStack* stack = LUAENGINE->getLuaStack();
+        
+        LuaValueDict dict;
+        dict.insert(std::make_pair("name", LuaValue::stringValue("onGetUserInfo")));
+        dict.insert(std::make_pair("data", FBGraphUserToLua(user)));
+        
         stack->pushLuaValueDict(dict);
         stack->executeFunctionByHandler(mLuaHandler, 1);
     }
@@ -312,7 +382,7 @@ int lua_PluginFacebookLua_PluginFacebook_api(lua_State* tolua_S)
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:share",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:api",argc, 4);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -320,6 +390,49 @@ tolua_lerror:
 #endif
     return 0;
 }
+
+int lua_PluginFacebookLua_PluginFacebook_requestInvitableFriends(lua_State* tolua_S) {
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginFacebook",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 0) {
+        sdkbox::FBAPIParam params;
+        sdkbox::PluginFacebook::requestInvitableFriends(params);
+        lua_settop(tolua_S, 1);
+        return 1;
+    } else if (argc == 1) {
+        LuaValueDict arg0;
+        ok &= luaval_to_ccluavaluemap(tolua_S, 2, &arg0);
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginFacebookLua_PluginFacebook_api'", nullptr);
+            return 0;
+        }
+        
+        sdkbox::FBAPIParam params = luaValueMap_to_APIParam(arg0);
+        sdkbox::PluginFacebook::requestInvitableFriends(params);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginFacebook:requestInvitableFriends",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginFacebookLua_PluginFacebook_requestInvitableFriends'.",&tolua_err);
+#endif
+    return 0;
+}
+
 int lua_PluginFacebookLua_PluginFacebook_getFriends(lua_State* tolua_S)
 {
     int argc = 0;
@@ -427,6 +540,7 @@ int extern_PluginFacebook(lua_State* L) {
         tolua_function(L,"getFriends", lua_PluginFacebookLua_PluginFacebook_getFriends);
         tolua_function(L, "canPresentWithFBApp", lua_PluginFacebookLua_PluginFacebook_canPresentWithFBApp);
         tolua_function(L, "api", lua_PluginFacebookLua_PluginFacebook_api);
+        tolua_function(L, "requestInvitableFriends", lua_PluginFacebookLua_PluginFacebook_requestInvitableFriends);
     }
     lua_pop(L, 1);
 
