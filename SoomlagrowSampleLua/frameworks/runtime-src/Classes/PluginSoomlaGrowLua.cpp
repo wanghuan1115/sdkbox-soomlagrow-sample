@@ -2,6 +2,7 @@
 #include "PluginSoomlaGrow/PluginSoomlaGrow.h"
 #include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
+#include "sdkbox/sdkbox.h"
 
 
 
@@ -177,6 +178,8 @@ TOLUA_API int register_all_PluginSoomlaGrowLua(lua_State* tolua_S)
 	lua_register_PluginSoomlaGrowLua_PluginSoomlaGrow(tolua_S);
 
 	tolua_endmodule(tolua_S);
+
+	sdkbox::setProjectType("lua");
 	return 1;
 }
 
