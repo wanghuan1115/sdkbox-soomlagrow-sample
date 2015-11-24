@@ -11,18 +11,17 @@ class HelloWorld : public cocos2d::Layer, public sdkbox::IAPListener, sdkbox::Fa
 public:
     static cocos2d::Scene* createScene();
 
-    virtual bool init();
+    virtual bool init() override;
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
-    
-    
+
     void onLoginClicked(cocos2d::Ref* sender);
     void onShareClicked(cocos2d::Ref* sender);
-    
+
     void onRestoreClicked(cocos2d::Ref* sender);
     void onRefreshClicked(cocos2d::Ref* sender);
     void onPurchaseClicked(cocos2d::Ref* sender);
@@ -42,26 +41,31 @@ public:
     
     virtual void onProductRequestFailure(const std::string &msg) override;
     
-    void onRestoreComplete(bool ok, const std::string &msg);
+    void onRestoreComplete(bool ok, const std::string &msg) override;
     
     //Facebook Listener
     // Events
-    void onLogin(bool isLogin, const std::string& msg);
-    void onSharedSuccess(const std::string& message);
-    void onSharedFailed(const std::string& message);
-    void onSharedCancel();
-    void onAPI(const std::string& key, const std::string& jsonData);
-    void onPermission(bool isLogin, const std::string& msg);
-    void onFetchFriends(bool ok, const std::string& msg);
-    
+    void onLogin(bool isLogin, const std::string& msg) override;
+    void onSharedSuccess(const std::string& message) override;
+    void onSharedFailed(const std::string& message) override;
+    void onSharedCancel() override;
+    void onAPI(const std::string& key, const std::string& jsonData) override;
+    void onPermission(bool isLogin, const std::string& msg) override;
+    void onFetchFriends(bool ok, const std::string& msg) override;
+
+    void onRequestInvitableFriends( const sdkbox::FBInvitableFriendsInfo& friends )  override;
+    void onInviteFriendsWithInviteIdsResult( bool result, const std::string& msg )  override;
+    void onInviteFriendsResult( bool result, const std::string& msg )  override;
+    void onGetUserInfo( const sdkbox::FBGraphUser& userInfo )  override;
+
     //Soomla Grow Listener
-    virtual void onGrowInitialized();
-    virtual void onGrowConnected();
-    virtual void onGrowDisconnected();
-    virtual void onGrowInsightsInitialized();
-    virtual void onInsightsRefreshFailed();
-    virtual void onInsightsRefreshFinished();
-    virtual void onInsightsRefreshStarted();
+    virtual void onGrowInitialized() override;
+    virtual void onGrowConnected() override;
+    virtual void onGrowDisconnected() override;
+    virtual void onGrowInsightsInitialized() override;
+    virtual void onInsightsRefreshFailed() override;
+    virtual void onInsightsRefreshFinished() override;
+    virtual void onInsightsRefreshStarted() override;
 
 private:
     std::string _productName;

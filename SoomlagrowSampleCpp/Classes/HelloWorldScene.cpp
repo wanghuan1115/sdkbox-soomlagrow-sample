@@ -241,6 +241,18 @@ void HelloWorld::onFetchFriends(bool ok, const std::string& msg)
     MessageBox("", "fetch friends");
 }
 
+void HelloWorld::onRequestInvitableFriends( const sdkbox::FBInvitableFriendsInfo& friends ) {
+}
+
+void HelloWorld::onInviteFriendsWithInviteIdsResult( bool result, const std::string& msg ) {
+}
+
+void HelloWorld::onInviteFriendsResult( bool result, const std::string& msg ) {
+}
+
+void HelloWorld::onGetUserInfo( const sdkbox::FBGraphUser& userInfo ) {
+}
+
 //Soomla Grow Listener
 void HelloWorld::onGrowInitialized() {
     CCLOG("Soomla Grow event initialized");

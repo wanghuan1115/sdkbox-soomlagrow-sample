@@ -11,4 +11,4 @@ APP_OPTIM := debug
 APP_CPPFLAGS += -DNDEBUG
 APP_OPTIM := release
 
-APP_PLATFORM := android-9 android-15 android-15
+APP_PLATFORM := android-15
