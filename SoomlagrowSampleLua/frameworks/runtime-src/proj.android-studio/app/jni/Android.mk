@@ -9,6 +9,7 @@ LOCAL_MODULE_FILENAME := libcocos2dlua
 LOCAL_SRC_FILES := ../../../Classes/AppDelegate.cpp ../../../Classes/ide-support/SimpleConfigParser.cpp ../../../Classes/ide-support/RuntimeLuaImpl.cpp ../../../Classes/ide-support/lua_debugger.c hellolua/main.cpp ../../../Classes/PluginIAPLua.cpp ../../../Classes/PluginIAPLuaHelper.cpp ../../../Classes/SDKBoxLuaHelper.cpp ../../../Classes/PluginFacebookLua.hpp ../../../Classes/PluginFacebookLua.cpp ../../../Classes/PluginFacebookLuaHelper.cpp ../../../Classes/PluginFacebookLuaHelper.h ../../../Classes/SDKBoxLuaHelper.h ../../../Classes/PluginSoomlaGrowLua.cpp ../../../Classes/PluginSoomlaGrowLuaHelper.cpp
 
 LOCAL_LDLIBS := -landroid -llog
+LOCAL_CPPFLAGS := -DSDKBOX_ENABLED
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 LOCAL_WHOLE_STATIC_LIBRARIES := PluginIAP sdkbox android_native_app_glue PluginFacebook PluginSoomlaGrow
 
